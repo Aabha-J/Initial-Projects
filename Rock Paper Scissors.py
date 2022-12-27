@@ -18,8 +18,8 @@ def play():
             return 'You win'
 
         else:
-            print(computer)
             return 'You lose'
+        
     else:
         return 'Invalid Input'
 
