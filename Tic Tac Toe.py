@@ -69,8 +69,8 @@ while not game_over:
         location = int(choose_spot()) - 1
         board[location] = 'X'
         print_board(board)
-        game_over = check_game()
         spots_available -= 1
+        game_over = check_game()
         player2_turn = True
         player1_turn = False
 
@@ -78,7 +78,7 @@ while not game_over:
         location = int(choose_spot()) - 1
         board[location] = 'O'
         print_board(board)
-        game_over = check_game()
         spots_available -= 1
+        game_over = check_game()
         player1_turn = True
         player2_turn = False
