@@ -5,7 +5,7 @@ from tkinter import PhotoImage
 import requests
 
 
-key = 'de9e19a4981d42f7b7b143816230305'
+key = 'insert your key here'
 
 def find_icon_num(icon_url):
     numstr = icon_url[icon_url.rfind("/") + 1:icon_url.rfind("/")+ 4]
