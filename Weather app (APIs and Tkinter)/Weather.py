@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import PhotoImage
 import requests
+from autocorrect import Speller
 
 
 key = 'insert your key here'
@@ -11,6 +12,10 @@ def find_icon_num(icon_url):
     numstr = icon_url[icon_url.rfind("/") + 1:icon_url.rfind("/")+ 4]
     return numstr
 
+def correct_spelling(city_name):
+  spell = Speller(lang='en')
+  corrected_name = spell(city_name)
+  return corrected_name
 
 def weather(city):
     url = f'http://api.weatherapi.com/v1/current.json?key={key}&q={city}'
