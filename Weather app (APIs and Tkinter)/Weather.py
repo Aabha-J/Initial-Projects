@@ -49,22 +49,26 @@ def weather(city):
 
     return info
 
-def search():
-    city = city_text.get()
-    weather_info = weather(city)
+def search(city):
+  weather_info = weather(city)
+  if weather_info:
+      location_lbl['text'] = f'{weather_info["city"]}, {weather_info["country"]}'
+      temp_lbl['text'] = f'{weather_info["temp"]} \u00b0C'
+      weather_lbl['text'] = weather_info["condition"]
 
-    if weather_info:
-        location_lbl['text'] = f'{weather_info["city"]}, {weather_info["country"]}'
-        temp_lbl['text'] = f'{weather_info["temp"]} \u00b0C'
-        weather_lbl['text'] = weather_info["condition"]
-        
-        #important to change and add images
-        img = PhotoImage(file=f'{weather_info["day/night"]}\{weather_info["icon num"]}.png')
-        image.config(image=img)
-        image.image = img
+      file = f'{weather_info["day/night"]}/{weather_info["icon num"]}.png'
+      
+      img = PhotoImage(file=file)
+      image.config(image=img)
+      image.image = img
 
+  else:
+    correction = correct_spelling(city)
+    if correction == city or correction == None:
+      messagebox.showerror("Error", "Cannot find city, please check spelling or enter another city name")
     else:
-        messagebox.showerror("Error", "Cannot find city, please check spelling or enter another city name")
+      search(correction)
+
         
 
 
@@ -72,17 +76,19 @@ def search():
 app = Tk()
 app.title("Weather App")
 
-app.geometry('350x300')
+app.geometry('350x500')
 
 city_text = StringVar()
 city_entry = Entry(app, textvariable=city_text)
 city_entry.pack()
 
 
-search_btn = Button(app, text = "Search", width = 16, command = search)
+search_btn = Button(app, text="Search", width=16, command=lambda: search(city_text.get()))
 search_btn.pack()
 
-location_lbl = Label(app, text = '', font = ('bold', 16))
+app.bind('<Return>', lambda event: search(city_text.get()))
+
+location_lbl = Label(app, text = '', font = ('bold', 14),wraplength=300)
 location_lbl.pack(pady=10)
 
 #to work with images
@@ -91,12 +97,10 @@ image = Label(app, image=blank_image)
 image.pack()
 
 weather_lbl = Label(app, text = '', font = 14)
-weather_lbl.pack(pady=8)
+weather_lbl.pack(pady=2)
 
 temp_lbl = Label(app, text = '', font = 14)
 temp_lbl.pack(pady=4)
 
-
-#add lbl for feels like and percipitation mm
 
 app.mainloop()
